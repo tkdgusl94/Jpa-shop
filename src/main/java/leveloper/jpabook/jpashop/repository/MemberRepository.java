@@ -11,7 +11,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MemberRepository {
 
-    //@PersistenceContext // 스프링이 생성한 엔티티매니저를 여기에 주입을 해준다.
+    //@PersistenceContext // 스프링이 생성한 엔티티매니저를 여기에 주입을 해준다. 스프링 데이터 jpa가 생성해줌.
     private final EntityManager em;
 
     /*
