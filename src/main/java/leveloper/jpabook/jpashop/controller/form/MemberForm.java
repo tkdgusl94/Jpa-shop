@@ -1,4 +1,4 @@
-package leveloper.jpabook.jpashop.controller;
+package leveloper.jpabook.jpashop.controller.form;
 
 import lombok.Getter;
 import lombok.Setter;

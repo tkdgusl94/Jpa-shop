@@ -1,5 +1,7 @@
 package leveloper.jpabook.jpashop.controller;
 
+import leveloper.jpabook.jpashop.controller.dto.MembersResponseDto;
+import leveloper.jpabook.jpashop.controller.form.MemberForm;
 import leveloper.jpabook.jpashop.domain.Address;
 import leveloper.jpabook.jpashop.domain.Member;
 import leveloper.jpabook.jpashop.service.MemberService;
@@ -11,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.validation.Valid;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
@@ -34,11 +38,28 @@ public class MemberController {
 
         Member member = new Member();
         member.setName(form.getName());
+
+        if(result.hasErrors()){
+            return "members/createMemberForm";
+        }
+
         member.setAddress(address);
 
         memberService.join(member);
 
         return "redirect:/";
+    }
 
+    @GetMapping("/members")
+    public String list(Model model){
+        List<Member> memberList = memberService.findMembers();
+
+        // Dto로 변경해서 반환
+        List<MembersResponseDto> members = memberList.stream()
+                .map(c -> new MembersResponseDto(c))
+                .collect(Collectors.toList());
+
+        model.addAttribute("members", members);
+        return "members/memberList";
     }
 }
